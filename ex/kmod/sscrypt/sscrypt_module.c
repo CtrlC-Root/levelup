@@ -1,9 +1,16 @@
 // Linux Kernel
 #include <linux/init.h> //__init, __exit
+#include <linux/module.h> // MODULE_ macros
 #include <linux/kernel.h>
 
 // SSCrypt
 #include "sscrypt.h"
+
+// Provide module information. Note: this must be defined in all object files.
+MODULE_LICENSE("GPL");
+MODULE_AUTHOR("Alexandru Barbur");
+MODULE_DESCRIPTION("A simple and secure encryption module.");
+MODULE_VERSION("0.1");
 
 // Instantiate the global module configuration data.
 static struct ssc_data sscrypt;
@@ -58,7 +65,7 @@ static int __init ssc_init(void) {
   }
 
   // register the device driver
-  sscrypt.device = device_create(sscrypt.device_class, NULL, MKDEV(sscrypt.device_major, 0), NULL, DEVICE_NAME);
+  sscrypt.device = device_create(sscrypt.device_class, NULL, MKDEV(sscrypt.device_major, 0), NULL, SSC_DEVICE_NAME);
   if (IS_ERR(sscrypt.device)) {
     // cleanup
     class_destroy(sscrypt.device_class);
@@ -78,18 +85,15 @@ static int __init ssc_init(void) {
  * Clean up the kernel module.
  */
 static void __exit ssc_exit(void) {
-  // XXX unregister device driver
+  // unregister device driver
   device_destroy(sscrypt.device_class, MKDEV(sscrypt.device_major, 0));
 
-  // XXX unregister the device class
+  // unregister the device class
   class_unregister(sscrypt.device_class);
   class_destroy(sscrypt.device_class);
 
   // unregister character device
-  int rc = unregister_chrdev(sscrypt.device_major, SSC_DEVICE_NAME);
-  if (rc < 0) {
-    printk(KERN_ALERT "sscrypt: failed to unregister character device: %d\n", rc);
-  }
+  unregister_chrdev(sscrypt.device_major, SSC_DEVICE_NAME);
 
   // status
   printk(KERN_INFO "sscrypt: exit\n");

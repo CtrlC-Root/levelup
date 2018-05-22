@@ -1,15 +1,8 @@
 #pragma once
 
 // Linux Kernel
-#include <linux/module.h> // MODULE_ macros
 #include <linux/device.h> // struct class, struct device
 #include <linux/fs.h> // struct inode, struct file
-
-// Provide module information. Note: this must be defined in all object files.
-MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Alexandru Barbur");
-MODULE_DESCRIPTION("A simple and secure encryption module.");
-MODULE_VERSION("0.1");
 
 /**
  * Character device name.
