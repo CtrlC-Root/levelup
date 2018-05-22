@@ -13,20 +13,14 @@ MODULE_DESCRIPTION("A simple and secure encryption module.");
 MODULE_VERSION("0.1");
 
 // Instantiate the global module configuration data.
-static struct ssc_data sscrypt;
-
-/**
- * Symmetric encryption key parameter.
- */
-module_param(sscrypt.encryption_key, charp, S_IWUGO);
-MODULE_PARM_DESC(sscrypt.encryption_key, "The key to encrypt or decrypt messages with.");
+struct ssc_data sscrypt;
 
 /**
  * TODO.
  *
  * @see https://stackoverflow.com/a/6079839/937006
  */
-static struct file_operations ssc_fops = {
+struct file_operations ssc_fops = {
   .owner = THIS_MODULE,
   .read = ssc_device_read,
   .write = ssc_device_write,
@@ -60,7 +54,7 @@ static int __init ssc_init(void) {
     unregister_chrdev(sscrypt.device_major, SSC_DEVICE_NAME);
 
     // quit
-    printk(KERN_ALERT "sscrypt: failed to register device class: %d\n", PTR_ERR(sscrypt.device_class));
+    printk(KERN_ALERT "sscrypt: failed to register device class: %ld\n", PTR_ERR(sscrypt.device_class));
     return PTR_ERR(sscrypt.device_class);
   }
 
@@ -72,7 +66,7 @@ static int __init ssc_init(void) {
     unregister_chrdev(sscrypt.device_major, SSC_DEVICE_NAME);
 
     // quit
-    printk(KERN_ALERT "sscrypt: failed to create device: %d\n", PTR_ERR(sscrypt.device));
+    printk(KERN_ALERT "sscrypt: failed to create device: %ld\n", PTR_ERR(sscrypt.device));
     return PTR_ERR(sscrypt.device);
   }
 
