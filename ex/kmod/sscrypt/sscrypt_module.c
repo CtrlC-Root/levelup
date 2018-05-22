@@ -13,14 +13,14 @@ MODULE_DESCRIPTION("A simple and secure encryption module.");
 MODULE_VERSION("0.1");
 
 // Instantiate the global module configuration data.
-struct ssc_data sscrypt;
+static struct ssc_data sscrypt;
 
 /**
  * TODO.
  *
  * @see https://stackoverflow.com/a/6079839/937006
  */
-struct file_operations ssc_fops = {
+static struct file_operations ssc_fops = {
   .owner = THIS_MODULE,
   .read = ssc_device_read,
   .write = ssc_device_write,
