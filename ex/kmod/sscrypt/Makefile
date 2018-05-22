@@ -1,5 +1,5 @@
 obj-m += sscrypt.o
-sscrypt-objs += sscrypt_api.o
+sscrypt-objs += sscrypt_module.o sscrypt_api.o
 
 .PHONY: all clean
 
