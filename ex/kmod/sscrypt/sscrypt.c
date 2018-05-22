@@ -1,17 +1,9 @@
 // Linux Kernel
-#include <linux/module.h>
-#include <linux/kernel.h>
-#include <linux/device.h>
 #include <linux/init.h> //__init, __exit
+#include <linux/kernel.h>
 
 // SSCrypt
 #include "sscrypt.h"
-
-// Provide module information.
-MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Alexandru Barbur");
-MODULE_DESCRIPTION("A simple and secure encryption module.");
-MODULE_VERSION("0.1");
 
 // Instantiate the global module configuration data.
 static struct ssc_data sscrypt;
