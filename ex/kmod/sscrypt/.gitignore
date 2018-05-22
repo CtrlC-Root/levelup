@@ -1,6 +1,6 @@
 .tmp_versions
 .cache.mk
-.sscrypt.*
+.sscrypt*
 Module.symvers
 modules.order
 sscrypt.ko
